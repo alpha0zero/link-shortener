@@ -1,29 +1,52 @@
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
+import axios from 'axios'
+import Link from 'next/link'
 
 type Status = 'loading' | 'unloaded' | 'loaded'
 
+interface Link {
+  url: string
+  slug: string
+}
+
+
 const Home: NextPage = () => {
 
+  const hundleSubmit = async (e: FormEvent<EventTarget>) => {
+
+    e.preventDefault()
+    const { data } = await axios.post('/api/link',
+      link
+    )
+
+    console.table(data)
+    if(data && data !== undefined) setStatus('loaded')
+  }
+
   const [status, setStatus] = useState<Status>('unloaded')
+  const [link, setLink] = useState<Link>({
+    url: '',
+    slug: ''
+  })
 
   return (
     <div className='vh-100 d-flex align-items-center justify-content-center'>
       
-      <form className='w-l-50 p-3 border rounded-4'>
+      <form onSubmit={hundleSubmit} className='w-l-50 p-3 border rounded-4'>
         <h2 className='text-center'> CREATE SHORT LINK </h2>
         <div>
           <label htmlFor='url'>
             URL:
           </label>
-          <input className='form-control' type='text' id='url' name='url'/>
+          <input onChange={(e) => setLink({...link, url: e.target.value})} className='form-control' type='text' id='url' name='url'/>
         </div>
 
         <div>
           <label htmlFor="slug">
             SLUG:
           </label>
-          <input className='form-control' type='text' id='slug' name='slug'/>
+          <input onChange={(e) => setLink({...link, slug: e.target.value})} className='form-control' type='text' id='slug' name='slug'/>
         </div>
 
         <div className='mt-2 text-center'>
