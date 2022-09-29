@@ -1,9 +1,11 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps } from 'next'
 import { FormEvent, useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 
 type Status = 'loading' | 'unloaded' | 'loaded'
+
+type Props = { host: string | null }
 
 interface Link {
   url: string
@@ -11,7 +13,7 @@ interface Link {
 }
 
 
-const Home: NextPage = () => {
+const Home = (props: Props) => {
 
   const hundleSubmit = async (e: FormEvent<EventTarget>) => {
 
@@ -32,9 +34,16 @@ const Home: NextPage = () => {
   })
 
   return (
-    <div className='vh-100 d-flex align-items-center justify-content-center'>
-      
-      <form onSubmit={hundleSubmit} className='w-75 px-3 py-5 border rounded-4'>
+    <div className='vh-100 d-flex align-items-center justify-content-center position-relative'>
+
+      <div className={`${status === 'loaded' ? 'd-block' : 'd-none' } position-absolute top-0 start-25 p-3`}>
+        HERE IS THE LINK, DO NOT FORGET TO COPY IT <br/>
+        <span className='link-primary'>
+          {`${props.host}/${link.slug}`}
+        </span>
+      </div>
+
+      <form onSubmit={hundleSubmit} className='w-75 px-3 py-5 border border-primary rounded-4'>
         <h2 className='text-center'> CREATE SHORT LINK </h2>
         <div>
           <label htmlFor='url'>
@@ -61,5 +70,7 @@ const Home: NextPage = () => {
     </div>
   )
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({req}: any) => ({ props: { host: req.headers.host || null } })
 
 export default Home
