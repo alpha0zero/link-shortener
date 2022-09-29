@@ -7,3 +7,5 @@ i'm using:
   * bootstrap
   * supabase
 
+[link to the website](https://link-shortener-8drv.vercel.app/)
+
