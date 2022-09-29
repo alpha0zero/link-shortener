@@ -18,11 +18,9 @@ export async function middleware(request: NextRequest) {
         console.log(slug);
             
         const link: Link = await (await fetch(`${request.nextUrl.origin}/api/${slug}`)).json()
-        
+
+        if (!link) return NextResponse.next()
         return NextResponse.redirect(link.url)
     }
-
-
-    
 }
 
