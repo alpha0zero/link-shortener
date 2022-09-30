@@ -15,10 +15,16 @@ interface Link {
 
 const Home = (props: Props) => {
 
-  const hundleSubmit = async (e: FormEvent<EventTarget>) => {
+  async function hundleSubmit (e: FormEvent<EventTarget>) {
 
     e.preventDefault()
 
+    if(link.slug.includes(' ') || !link.url || !link.slug) {
+      setSlugValidation(true)
+      return
+    }
+
+    setSlugValidation(false)
     const { data } = await axios.post('/api/link',
       link
     )
@@ -32,6 +38,7 @@ const Home = (props: Props) => {
     url: '',
     slug: ''
   })
+  const [slugValidation, setSlugValidation] = useState<boolean>(false)
 
   return (
     <div className='vh-100 d-flex align-items-center justify-content-center position-relative'>
@@ -49,19 +56,21 @@ const Home = (props: Props) => {
           <label htmlFor='url'>
             URL:
           </label>
-          <input onChange={(e) => setLink({...link, url: e.target.value})} className='form-control' type='text' id='url' name='url' required/>
+          <input onChange={(e) => setLink({...link, url: e.target.value})} className='form-control' type='text' id='url' name='url'/>
         </div>
 
         <div>
           <label htmlFor="slug">
             SLUG:
           </label>
-          <input onChange={(e) => setLink({...link, slug: e.target.value})} className='form-control' type='text' id='slug' name='slug' required/>
+          <input onChange={(e) => setLink({...link, slug: e.target.value})} className='form-control' type='text' id='slug' name='slug'/>
         </div>
+
+        <div className='d-block bg-danger text-light rounded px-2 my-3'> { slugValidation && 'Something is wrong w/ your input' } </div>
 
         <div className='mt-2 text-center'>
           <button onClick={() => setStatus('loading')} className='btn btn-primary w-100' type='submit'>
-            <span className={`spinner-border spinner-border-sm mx-2 ${status === 'loading' ? 'd-inline-block' : 'd-none'}`}></span>
+            <span className={`spinner-border spinner-border-sm mx-2 ${status === 'loading' ? 'd-inline-block' : 'd-none'} ${slugValidation && 'd-none'}`}></span>
             CREATE SHORT LINK 
           </button>
         </div>
