@@ -41,41 +41,43 @@ const Home = (props: Props) => {
   const [slugValidationErr, setSlugValidationErr] = useState<boolean>(false)
 
   return (
-    <div className='container vh-100 d-flex align-items-center justify-content-center position-relative'>
+    <div className='vh-100 bg-primary'>
+      <div className='container vh-100 d-flex align-items-center justify-content-center position-relative'>
 
-      <div className={`w-75 ${status === 'loaded' ? 'alert alert-success' : 'd-none' } position-absolute top-0 start-25 p-3 my-3`} role='alert'>
-        HERE IS THE LINK, DO NOT FORGET TO COPY IT
-        <span className='link-primary'>
-          {` ${props.host}/${link.slug}`}
-        </span>
+        <div className={`w-75 ${status === 'loaded' ? 'alert alert-success' : 'd-none' } position-absolute top-0 start-25 p-3 my-3`} role='alert'>
+          HERE IS THE LINK, DO NOT FORGET TO COPY IT
+          <span className='link-primary'>
+            {` ${props.host}/${link.slug}`}
+          </span>
+        </div>
+
+        <form onSubmit={hundleSubmit} className='bg-light w-75 px-3 py-5 border border-primary rounded-4'>
+          <h2 className='text-center'> CREATE SHORT LINK </h2>
+          <div>
+            <label htmlFor='url'>
+              URL:
+            </label>
+            <input onChange={(e) => setLink({...link, url: e.target.value})} className='form-control' type='text' id='url' name='url'/>
+          </div>
+
+          <div>
+            <label htmlFor="slug">
+              SLUG:
+            </label>
+            <input onChange={(e) => setLink({...link, slug: e.target.value})} className='form-control' type='text' id='slug' name='slug'/>
+          </div>
+
+          <div className='d-block bg-danger text-light rounded px-2 my-3'> { slugValidationErr && 'Something is wrong w/ your input' } </div>
+
+          <div className='mt-2 text-center'>
+            <button onClick={() => setStatus('loading')} className='btn btn-primary w-100' type='submit'>
+              <span className={`spinner-border spinner-border-sm mx-2 ${status === 'loading' ? 'd-inline-block' : 'd-none'} ${slugValidationErr && 'd-none'}`}></span>
+              CREATE SHORT LINK 
+            </button>
+          </div>
+
+        </form>
       </div>
-
-      <form onSubmit={hundleSubmit} className='w-75 px-3 py-5 border border-primary rounded-4'>
-        <h2 className='text-center'> CREATE SHORT LINK </h2>
-        <div>
-          <label htmlFor='url'>
-            URL:
-          </label>
-          <input onChange={(e) => setLink({...link, url: e.target.value})} className='form-control' type='text' id='url' name='url'/>
-        </div>
-
-        <div>
-          <label htmlFor="slug">
-            SLUG:
-          </label>
-          <input onChange={(e) => setLink({...link, slug: e.target.value})} className='form-control' type='text' id='slug' name='slug'/>
-        </div>
-
-        <div className='d-block bg-danger text-light rounded px-2 my-3'> { slugValidationErr && 'Something is wrong w/ your input' } </div>
-
-        <div className='mt-2 text-center'>
-          <button onClick={() => setStatus('loading')} className='btn btn-primary w-100' type='submit'>
-            <span className={`spinner-border spinner-border-sm mx-2 ${status === 'loading' ? 'd-inline-block' : 'd-none'} ${slugValidationErr && 'd-none'}`}></span>
-            CREATE SHORT LINK 
-          </button>
-        </div>
-
-      </form>
     </div>
   )
 }
