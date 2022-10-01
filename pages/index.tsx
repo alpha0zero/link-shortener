@@ -41,12 +41,12 @@ const Home = (props: Props) => {
   const [slugValidationErr, setSlugValidationErr] = useState<boolean>(false)
 
   return (
-    <div className='vh-100 d-flex align-items-center justify-content-center position-relative'>
+    <div className='container vh-100 d-flex align-items-center justify-content-center position-relative'>
 
-      <div className={`${status === 'loaded' ? 'd-block' : 'd-none' } position-absolute top-0 start-25 p-3`}>
-        HERE IS THE LINK, DO NOT FORGET TO COPY IT <br/>
+      <div className={`w-75 ${status === 'loaded' ? 'alert alert-success' : 'd-none' } position-absolute top-0 start-25 p-3 my-3`} role='alert'>
+        HERE IS THE LINK, DO NOT FORGET TO COPY IT
         <span className='link-primary'>
-          {`${props.host}/${link.slug}`}
+          {` ${props.host}/${link.slug}`}
         </span>
       </div>
 
