@@ -1,6 +1,5 @@
 import { Link } from "@prisma/client"
-import { GetServerSideProps } from "next"
-import { prisma } from "../db/prismaClient"
+import { prisma } from "../../db/prismaClient"
 
 type Props = { links: Link[] | null }
 
