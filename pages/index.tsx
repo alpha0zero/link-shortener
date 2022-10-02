@@ -52,6 +52,13 @@ const Home = (props: Props) => {
         </div>
 
         <form onSubmit={hundleSubmit} className='bg-light w-75 px-3 py-5 border rounded-4'>
+
+          <Link href='/links'>
+            <span style={{cursor: 'pointer'}} className='link-primary fs-3'>
+              Links created 
+            </span> 
+          </Link>
+
           <h2 className='text-center'> CREATE SHORT LINK </h2>
           <div>
             <label htmlFor='url'>
