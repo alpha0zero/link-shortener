@@ -7,7 +7,7 @@ type Props = { links: Link[] | null }
 const Links = (props: Props) => {
     return (
         <div className="m-3">
-            <table className="table table-dark">
+            <table className="table table-dark table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
