@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { prisma } from "../../db/prismaClient"
+import { prisma } from "../../../db/prismaClient"
 
 const hundler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { slug } = req.query

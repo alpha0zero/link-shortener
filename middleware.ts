@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
 
         const slug = request.nextUrl.pathname.split('/').pop()
             
-        const link: Link = await (await fetch(`${request.nextUrl.origin}/api/${slug}`)).json()
+        const link: Link = await (await fetch(`${request.nextUrl.origin}/api/links/${slug}`)).json()
 
         if (!link) return NextResponse.next()
         return NextResponse.redirect(link.url)
